@@ -261,12 +261,9 @@ jeecg:
       user: postgres
       password: postgres
       table: embeddings
-    # Brave Search 联网检索（AI Agent 工具）
-    brave-search:
-      api-key: ??
-      endpoint: https://api.search.brave.com/res/v1/web/search
-      count: 10
-      timeout: 15
+    # Brave Search 已禁用（使用 SearXNG 免费搜索替代）
+    # brave-search:
+    #   api-key: ??
     # SearXNG 免费联网检索（开源元搜索引擎，优先使用）
     # 公共实例列表: https://searx.space
     # 推荐自建或使用可靠的公共实例

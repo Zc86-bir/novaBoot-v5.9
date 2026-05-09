@@ -56,7 +56,6 @@ import org.jeecg.modules.airag.flow.vo.tool.ToolExecutionVo;
 import org.jeecg.modules.airag.llm.consts.LLMConsts;
 import org.jeecg.modules.airag.llm.document.TikaDocumentParser;
 import org.jeecg.modules.airag.llm.entity.AiragModel;
-import org.jeecg.modules.airag.flow.handler.BraveSearchToolBuilder;
 import org.jeecg.modules.airag.llm.handler.AIChatHandler;
 import org.jeecg.modules.airag.llm.handler.JeecgToolsProvider;
 import org.jeecg.modules.airag.llm.mapper.AiragModelMapper;
@@ -1521,7 +1520,7 @@ public class AiragChatServiceImpl implements IAiragChatService {
         if (Boolean.TRUE.equals(aiChatParams.getEnableSearch())) {
             Map<ToolSpecification, ToolExecutor> searchTools = new HashMap<>();
 
-            // 1. 优先尝试 SearXNG（免费开源）
+            // 1. 优先使用 SearXNG（免费开源）
             AiRagConfigBean.SearXNGConfig searxngConfig = aiRagConfigBean.getSearxng();
             if (searxngConfig != null && oConvertUtils.isNotEmpty(searxngConfig.getBaseUrl())) {
                 org.jeecg.modules.airag.app.handler.SearXNGSearchToolBuilder.SearXNGSearchConfig config =
@@ -1535,13 +1534,8 @@ public class AiragChatServiceImpl implements IAiragChatService {
                 log.info("[AI应用]使用 SearXNG 免费搜索，实例: {}", searxngConfig.getBaseUrl());
             }
 
-            // 2. SearXNG 未配置时，回退到 BraveSearch（需 API Key）
             if (searchTools.isEmpty()) {
-                Map<ToolSpecification, ToolExecutor> braveTools = BraveSearchToolBuilder.buildTools(aiRagConfigBean.getBraveSearch());
-                if (!braveTools.isEmpty()) {
-                    searchTools.putAll(braveTools);
-                    log.info("[AI应用]使用 Brave Search 联网检索");
-                }
+                log.warn("[AI应用]未配置 SearXNG，联网搜索不生效");
             }
 
             // 3. 注入 OpenCLI 工具（浏览器自动化搜索，与搜索工具互补）
@@ -1561,7 +1555,7 @@ public class AiragChatServiceImpl implements IAiragChatService {
             }
 
             if (searchTools.isEmpty()) {
-                log.warn("[AI应用]未配置 SearXNG、BraveSearch 或 OpenCLI，联网搜索不生效");
+                log.warn("[AI应用]未配置 SearXNG 或 OpenCLI，联网搜索不生效");
             }
 
             if (!searchTools.isEmpty()) {
@@ -1573,7 +1567,7 @@ public class AiragChatServiceImpl implements IAiragChatService {
                 aiChatParams.setTools(existing);
             }
         }
-        //update-end---author:Claude ---date:2026-05-09---for：【免费搜索】优先使用 SearXNG 免费搜索，无配置时回退到 BraveSearch-----------
+        //update-end---author:Claude ---date:2026-05-09---for：【免费搜索】使用 SearXNG 免费搜索，可选集成 OpenCLI-----------
         //update-end---author:wangshuai ---date:2026-04-15  for：Brave Search配置迁移到AiRagConfigBean，仅在联网搜索开启时注入工具-----------
         if(CollectionUtils.isEmpty(aiChatParams.getKnowIds())){
             aiChatParams.setKnowIds(chatConversation.getApp().getKnowIds());
