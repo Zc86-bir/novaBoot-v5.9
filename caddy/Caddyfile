@@ -1,0 +1,56 @@
+# JeecgBoot 前后端联调 Caddy 配置
+# 使用: caddy run --config Caddyfile
+
+{
+	admin off
+	auto_https off
+}
+
+# 主代理服务器
+localhost:3000 {
+	log {
+		output file caddy-access.log
+	}
+
+	# CORS 响应头
+	header {
+		Access-Control-Allow-Origin "*"
+		Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS, PATCH"
+		Access-Control-Allow-Headers "*"
+		Access-Control-Allow-Credentials "true"
+	}
+
+	# OPTIONS 请求处理
+	@options method OPTIONS
+	respond @options 204
+
+	# API 代理 - /jeecgboot/* 转发到后端 /jeecg-boot/*
+	handle /jeecgboot/* {
+		uri strip_prefix /jeecgboot
+		reverse_proxy localhost:8081 {
+			header_up Host {upstream_hostport}
+			header_up X-Real-IP {remote}
+			header_up X-Forwarded-For {remote}
+			header_up X-Forwarded-Proto {scheme}
+			header_up X-Forwarded-Host {host}
+			header_up Origin {header.Origin}
+			header_up Cookie {header.Cookie}
+			header_down Access-Control-Allow-Origin "*"
+			header_down Access-Control-Allow-Credentials "true"
+		}
+	}
+
+	# 上传服务代理
+	handle /upload/* {
+		reverse_proxy localhost:3300
+	}
+
+	# 前端静态资源
+	root * ../jeecgboot-vue3/dist
+	file_server
+
+	# SPA 路由
+	try_files {path} {path}/ /index.html
+
+	encode gzip
+}

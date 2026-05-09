@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "maas": {
+      "source": "qiniu/skills",
+      "sourceType": "github",
+      "skillPath": "skills/maas/SKILL.md",
+      "computedHash": "eccc37f1422b8ac5e4bfdee57446948f4ee9b6d73a74dc7d2b34b0aa2c078a2e"
+    }
+  }
+}

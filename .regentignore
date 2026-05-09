@@ -1,0 +1,33 @@
+# Regent ignore file - files/directories to exclude from agent tracking
+
+# Dependencies
+node_modules/
+vendor/
+
+# Build outputs
+dist/
+build/
+out/
+target/
+
+# Environment files (secrets)
+.env
+.env.*
+*.key
+*.pem
+credentials.json
+
+# Large binary files
+*.exe
+*.dll
+*.so
+*.dylib
+*.zip
+*.tar.gz
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
