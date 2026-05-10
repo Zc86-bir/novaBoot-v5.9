@@ -15,7 +15,8 @@ os_del_doc.cmd
 derby.log
 .cursor
 .history
-.claude
+.claude/settings.json
+.claude/scheduled_tasks.lock
 
 ## regent - AI Agent Version Control
 .regent/
