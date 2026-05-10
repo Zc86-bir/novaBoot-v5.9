@@ -1660,12 +1660,17 @@
         background: rgba(0, 0, 0, 0.3);
         border-radius: 12px;
         padding: 15px;
+        overflow-x: auto; // 小屏幕支持横向滚动
+
+        // 确保表格容器有最小宽度
+        min-width: 100%;
 
         .table-header {
           display: flex;
           justify-content: space-between;
           align-items: center;
           margin-bottom: 15px;
+          min-width: 800px; // 表头最小宽度
 
           .header-title {
             display: flex;
@@ -1688,6 +1693,8 @@
         }
 
         .table-content {
+          min-width: 800px; // 表格内容最小宽度
+
           .crypto-row {
             display: flex;
             align-items: center;
@@ -1696,9 +1703,25 @@
             border-radius: 8px;
             margin-bottom: 8px;
             transition: all 0.3s;
+            gap: 8px; // 列间距
 
             &:hover {
               background: rgba(255, 255, 255, 0.1);
+            }
+
+            // 通用列样式
+            .crypto-rank,
+            .crypto-symbol,
+            .crypto-category,
+            .crypto-price,
+            .crypto-change,
+            .crypto-7d,
+            .crypto-volume,
+            .crypto-marketcap,
+            .crypto-range {
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
             }
 
             &.header-row {
@@ -1708,20 +1731,36 @@
               color: rgba(255, 255, 255, 0.7);
               padding: 8px 15px;
               margin-bottom: 12px;
+              text-align: center;
 
               &:hover {
                 background: rgba(0, 0, 0, 0.3);
               }
+
+              // 表头各列保持一致的 flex 布局
+              .crypto-rank { flex: 0 0 50px; min-width: 50px; text-align: center; }
+              .crypto-symbol { flex: 1 1 100px; min-width: 100px; max-width: 150px; text-align: left; }
+              .crypto-category { flex: 0 0 80px; min-width: 70px; max-width: 100px; text-align: center; }
+              .crypto-price { flex: 1 1 100px; min-width: 100px; max-width: 140px; text-align: right; }
+              .crypto-change { flex: 0 0 90px; min-width: 80px; max-width: 100px; text-align: right; }
+              .crypto-7d { flex: 0 0 90px; min-width: 80px; max-width: 100px; text-align: right; }
+              .crypto-volume { flex: 1 1 90px; min-width: 80px; max-width: 120px; text-align: right; }
+              .crypto-marketcap { flex: 1 1 90px; min-width: 80px; max-width: 120px; text-align: right; }
+              .crypto-range { flex: 2 1 200px; min-width: 150px; text-align: right; justify-content: flex-end; }
             }
 
             .crypto-rank {
-              width: 30px;
+              flex: 0 0 50px;
+              min-width: 50px;
               font-size: 14px;
               color: rgba(255, 255, 255, 0.6);
+              text-align: center;
             }
 
             .crypto-symbol {
-              width: 100px;
+              flex: 1 1 100px;
+              min-width: 100px;
+              max-width: 150px;
               .symbol-name {
                 font-size: 14px;
                 font-weight: bold;
@@ -1734,7 +1773,9 @@
             }
 
             .crypto-category {
-              width: 70px;
+              flex: 0 0 80px;
+              min-width: 70px;
+              max-width: 100px;
               .category-tag {
                 display: inline-block;
                 padding: 2px 8px;
@@ -1777,7 +1818,9 @@
             }
 
             .crypto-price {
-              width: 90px;
+              flex: 1 1 100px;
+              min-width: 100px;
+              max-width: 140px;
               font-size: 14px;
               transition: all 0.3s ease;
 
@@ -1830,7 +1873,9 @@
             }
 
             .crypto-change {
-              width: 80px;
+              flex: 0 0 90px;
+              min-width: 80px;
+              max-width: 100px;
               font-size: 14px;
               &.up {
                 color: #52c41a;
@@ -1841,7 +1886,9 @@
             }
 
             .crypto-7d {
-              width: 80px;
+              flex: 0 0 90px;
+              min-width: 80px;
+              max-width: 100px;
               font-size: 14px;
               &.up {
                 color: #52c41a;
@@ -1852,23 +1899,31 @@
             }
 
             .crypto-volume {
-              width: 90px;
+              flex: 1 1 90px;
+              min-width: 80px;
+              max-width: 120px;
               font-size: 14px;
               color: rgba(255, 255, 255, 0.8);
             }
 
             .crypto-marketcap {
-              width: 90px;
+              flex: 1 1 90px;
+              min-width: 80px;
+              max-width: 120px;
               font-size: 14px;
               color: rgba(255, 255, 255, 0.8);
             }
 
             .crypto-range {
-              flex: 1;
+              flex: 2 1 200px;
+              min-width: 150px;
               display: flex;
               align-items: center;
+              justify-content: flex-end;
               .range-bar {
-                width: 80px;
+                flex: 1;
+                min-width: 60px;
+                max-width: 100px;
                 height: 6px;
                 background: rgba(255, 255, 255, 0.1);
                 border-radius: 3px;
@@ -1885,6 +1940,7 @@
               .range-values {
                 font-size: 12px;
                 color: rgba(255, 255, 255, 0.6);
+                white-space: nowrap;
               }
             }
           }

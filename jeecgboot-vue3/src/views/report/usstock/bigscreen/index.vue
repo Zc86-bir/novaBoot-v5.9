@@ -410,20 +410,20 @@
     { name: '道琼斯', value: '37,545.33', change: 0.42 },
   ]);
 
-  // 扩展表格列
+  // 扩展表格列 - 使用百分比实现自适应列宽
   const columns = [
-    { title: '排名', dataIndex: 'rank', width: 60, align: 'center' },
-    { title: '代码', dataIndex: 'symbol', width: 85 },
-    { title: '名称', dataIndex: 'name', width: 130 },
-    { title: '行业', dataIndex: 'sector', width: 75, align: 'center' },
-    { title: '收盘价($)', dataIndex: 'closePrice', width: 95, align: 'right' },
-    { title: '涨跌额($)', dataIndex: 'change', width: 95, align: 'right' },
-    { title: '涨跌幅', dataIndex: 'changePct', width: 90, align: 'right' },
-    { title: '振幅', dataIndex: 'amplitude', width: 80, align: 'right' },
-    { title: '成交量', dataIndex: 'volume', width: 100, align: 'right' },
-    { title: '成交额(亿)', dataIndex: 'turnover', width: 100, align: 'right' },
-    { title: '最高/最低($)', dataIndex: 'highLow', width: 130, align: 'center' },
-    { title: '市值', dataIndex: 'marketCap', width: 90, align: 'center' },
+    { title: '排名', dataIndex: 'rank', width: '5%', minWidth: 50, align: 'center' },
+    { title: '代码', dataIndex: 'symbol', width: '8%', minWidth: 70 },
+    { title: '名称', dataIndex: 'name', width: '12%', minWidth: 100, ellipsis: true },
+    { title: '行业', dataIndex: 'sector', width: '8%', minWidth: 70, align: 'center' },
+    { title: '收盘价($)', dataIndex: 'closePrice', width: '9%', minWidth: 85, align: 'right' },
+    { title: '涨跌额($)', dataIndex: 'change', width: '9%', minWidth: 85, align: 'right' },
+    { title: '涨跌幅', dataIndex: 'changePct', width: '8%', minWidth: 80, align: 'right' },
+    { title: '振幅', dataIndex: 'amplitude', width: '7%', minWidth: 70, align: 'right' },
+    { title: '成交量', dataIndex: 'volume', width: '9%', minWidth: 90, align: 'right' },
+    { title: '成交额(亿)', dataIndex: 'turnover', width: '10%', minWidth: 95, align: 'right' },
+    { title: '最高/最低($)', dataIndex: 'highLow', width: '12%', minWidth: 110, align: 'center' },
+    { title: '市值', dataIndex: 'marketCap', width: '8%', minWidth: 75, align: 'center' },
   ];
 
   // ===== 核心统计数据 =====
@@ -1940,6 +1940,13 @@
 
   .table-box {
     padding: 0;
+    overflow-x: auto; // 小屏幕支持横向滚动
+
+    // 深色表格样式增强
+    :deep(.ant-table) {
+      background: transparent;
+      color: #fff;
+    }
   }
 
   .table-subtitle {
@@ -1978,6 +1985,8 @@
 
   .table-content {
     padding: 12px 16px;
+    min-width: 100%; // 确保容器自适应
+    overflow-x: auto; // 小屏幕支持横向滚动
   }
 
   /* 深色表格样式 */
