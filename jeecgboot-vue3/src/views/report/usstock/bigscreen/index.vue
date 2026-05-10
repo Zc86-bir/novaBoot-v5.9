@@ -1940,7 +1940,7 @@
 
   .table-box {
     padding: 0;
-    overflow-x: auto; // 小屏幕支持横向滚动
+    overflow-x: auto;
 
     // 深色表格样式增强
     :deep(.ant-table) {
@@ -1985,8 +1985,8 @@
 
   .table-content {
     padding: 12px 16px;
-    min-width: 100%; // 确保容器自适应
-    overflow-x: auto; // 小屏幕支持横向滚动
+    min-width: 100%;
+    overflow-x: auto;
   }
 
   /* 深色表格样式 */

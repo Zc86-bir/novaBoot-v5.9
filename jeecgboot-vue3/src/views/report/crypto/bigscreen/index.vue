@@ -1660,7 +1660,7 @@
         background: rgba(0, 0, 0, 0.3);
         border-radius: 12px;
         padding: 15px;
-        overflow-x: auto; // 小屏幕支持横向滚动
+        overflow-x: auto;
 
         // 确保表格容器有最小宽度
         min-width: 100%;
@@ -1670,7 +1670,7 @@
           justify-content: space-between;
           align-items: center;
           margin-bottom: 15px;
-          min-width: 800px; // 表头最小宽度
+          min-width: 800px;
 
           .header-title {
             display: flex;
@@ -1693,7 +1693,7 @@
         }
 
         .table-content {
-          min-width: 800px; // 表格内容最小宽度
+          min-width: 800px;
 
           .crypto-row {
             display: flex;
@@ -1703,7 +1703,7 @@
             border-radius: 8px;
             margin-bottom: 8px;
             transition: all 0.3s;
-            gap: 8px; // 列间距
+            gap: 8px;
 
             &:hover {
               background: rgba(255, 255, 255, 0.1);
