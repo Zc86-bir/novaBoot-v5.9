@@ -75,8 +75,11 @@
         option.series[0].data = props.chartData;
         setOptions(option);
         resize();
-        getInstance()?.off('click', onClick);
-        getInstance()?.on('click', onClick);
+        const instance = getInstance();
+        if (instance) {
+          instance.off('click');
+          instance.on('click', onClick);
+        }
       }
 
       function onClick(params) {

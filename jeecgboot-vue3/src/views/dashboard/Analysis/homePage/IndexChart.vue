@@ -1,6 +1,41 @@
 <template>
   <div class="p-4">
     <ChartGroupCard class="enter-y" :loading="loading" type="chart" />
+
+    <!-- 数据大屏入口 -->
+    <a-row class="!my-4 enter-y" :gutter="16">
+      <a-col :span="12">
+        <a-card class="bigscreen-card" @click="goToCryptoScreen" :hoverable="true">
+          <div class="bigscreen-content crypto-bg">
+            <div class="bigscreen-icon">
+              <LineChartOutlined />
+            </div>
+            <div class="bigscreen-info">
+              <h3>加密货币实时看板</h3>
+              <p>实时追踪BTC、ETH等主流加密货币行情</p>
+              <a-tag color="orange">实时数据</a-tag>
+            </div>
+            <RightOutlined class="arrow-icon" />
+          </div>
+        </a-card>
+      </a-col>
+      <a-col :span="12">
+        <a-card class="bigscreen-card" @click="goToStockScreen" :hoverable="true">
+          <div class="bigscreen-content stock-bg">
+            <div class="bigscreen-icon">
+              <BarChartOutlined />
+            </div>
+            <div class="bigscreen-info">
+              <h3>美股实时看板</h3>
+              <p>纳斯达克、标普500等美股实时行情</p>
+              <a-tag color="blue">实时数据</a-tag>
+            </div>
+            <RightOutlined class="arrow-icon" />
+          </div>
+        </a-card>
+      </a-col>
+    </a-row>
+
     <SaleTabCard class="!my-4 enter-y" :loading="loading" />
     <a-row>
       <a-col :span="24">
@@ -18,6 +53,8 @@
 </template>
 <script lang="ts" setup>
   import { ref, watch } from 'vue';
+  import { useRouter } from 'vue-router';
+  import { LineChartOutlined, BarChartOutlined, RightOutlined } from '@ant-design/icons-vue';
   import ChartGroupCard from '../components/ChartGroupCard.vue';
   import SaleTabCard from '../components/SaleTabCard.vue';
   import LineMulti from '/@/components/chart/LineMulti.vue';
@@ -26,6 +63,7 @@
   import { useRootSetting } from '/@/hooks/setting/useRootSetting';
 
   const loading = ref(true);
+  const router = useRouter();
   const { getThemeColor } = useRootSetting();
 
   setTimeout(() => {
@@ -76,6 +114,16 @@
       color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
+  }
+
+  // 跳转到加密货币大屏
+  function goToCryptoScreen() {
+    router.push('/report/crypto');
+  }
+
+  // 跳转到美股大屏
+  function goToStockScreen() {
+    router.push('/report/usstock/dashboard');
   }
 </script>
 
@@ -144,6 +192,77 @@
   .ant-card {
     ::v-deep(.ant-card-head-title) {
       font-weight: normal;
+    }
+  }
+
+  /* 大屏入口卡片样式 */
+  .bigscreen-card {
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    .bigscreen-content {
+      display: flex;
+      align-items: center;
+      padding: 8px 4px;
+
+      &.crypto-bg {
+        .bigscreen-icon {
+          background: linear-gradient(135deg, #f7931a 0%, #ffd700 100%);
+        }
+      }
+
+      &.stock-bg {
+        .bigscreen-icon {
+          background: linear-gradient(135deg, #1890ff 0%, #36cfc9 100%);
+        }
+      }
+    }
+
+    .bigscreen-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      color: #fff;
+      margin-right: 16px;
+      flex-shrink: 0;
+    }
+
+    .bigscreen-info {
+      flex: 1;
+      min-width: 0;
+
+      h3 {
+        margin: 0 0 8px 0;
+        font-size: 18px;
+        font-weight: 600;
+        color: rgba(0, 0, 0, 0.85);
+      }
+
+      p {
+        margin: 0 0 8px 0;
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.45);
+      }
+    }
+
+    .arrow-icon {
+      font-size: 20px;
+      color: rgba(0, 0, 0, 0.25);
+      transition: transform 0.3s ease;
+    }
+
+    &:hover .arrow-icon {
+      transform: translateX(4px);
+      color: rgba(0, 0, 0, 0.45);
     }
   }
 </style>

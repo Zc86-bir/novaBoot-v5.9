@@ -72,13 +72,23 @@
         let seriesData = props.chartData.map((item) => {
           return item.value;
         });
-        let xAxisData = props.chartData.map((item) => {
+        let axisData = props.chartData.map((item) => {
           return item.name;
         });
         option.series[0].data = seriesData;
         // 代码逻辑说明: 【QQYUN-8762】首页默认及echars颜色调整
         option.series[0].color = props.seriesColor;
-        option.xAxis.data = xAxisData;
+
+        // 根据坐标轴类型设置数据（支持纵向和横向条形图）
+        if (option.xAxis && option.xAxis.type === 'category') {
+          option.xAxis.data = axisData;
+        } else if (option.yAxis && option.yAxis.type === 'category') {
+          option.yAxis.data = axisData;
+        } else {
+          // 默认设置到 xAxis
+          option.xAxis.data = axisData;
+        }
+
         setOptions(option);
       }
       return { chartRef };
