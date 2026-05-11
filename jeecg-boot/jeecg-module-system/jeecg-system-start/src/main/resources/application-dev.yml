@@ -256,8 +256,8 @@ jeecg:
     allow-sensitive-nodes: sql,stdio
     embed-store:
       host: 127.0.0.1
-      port: 5432
-      database: postgres
+      port: 15432
+      database: vector_db
       user: postgres
       password: postgres
       table: embeddings
