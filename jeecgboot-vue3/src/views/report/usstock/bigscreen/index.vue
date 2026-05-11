@@ -1198,12 +1198,12 @@
     return start + (end - start) * t;
   }
 
-  // 实时价格模拟 - 每3秒微调价格
+  // 实时价格模拟 - 每15秒微调价格
   function startRealtimeSimulation() {
     if (realtimeInterval.value) clearInterval(realtimeInterval.value);
     realtimeInterval.value = window.setInterval(() => {
       simulatePriceChanges();
-    }, 3000);
+    }, 15000);
   }
 
   // 模拟价格波动
@@ -1261,10 +1261,10 @@
     if (autoUpdateInterval.value) {
       clearInterval(autoUpdateInterval.value);
     }
-    // 每30秒刷新一次
+    // 每5分钟刷新一次
     autoUpdateInterval.value = window.setInterval(() => {
       executeAutoUpdate();
-    }, 30000);
+    }, 300000);
     startCountdown();
     startRealtimeSimulation();
   }
@@ -1327,7 +1327,7 @@
   });
 </script>
 
-<style scoped>
+<style lang="less" scoped>
   .usstock-bigscreen {
     width: 100%;
     min-height: 100vh;
@@ -1942,7 +1942,7 @@
     padding: 0;
     overflow-x: auto;
 
-    // 深色表格样式增强
+    /* 深色表格样式增强 */
     :deep(.ant-table) {
       background: transparent;
       color: #fff;

@@ -1079,12 +1079,12 @@
     return start + (end - start) * t;
   }
 
-  // 自动更新逻辑 - 30秒轮询
+  // 自动更新逻辑 - 5分钟轮询
   function startAutoUpdate() {
     if (autoUpdateInterval.value) clearInterval(autoUpdateInterval.value);
     autoUpdateInterval.value = window.setInterval(() => {
       fetchData();
-    }, 30000);
+    }, 300000);
     startCountdown();
     startRealtimeSimulation();
   }
@@ -1100,12 +1100,12 @@
     stopCountdown();
   }
 
-  // 实时价格模拟 - 每3秒微调价格
+  // 实时价格模拟 - 每15秒微调价格
   function startRealtimeSimulation() {
     if (realtimeInterval.value) clearInterval(realtimeInterval.value);
     realtimeInterval.value = window.setInterval(() => {
       simulatePriceChanges();
-    }, 3000);
+    }, 15000);
   }
 
   // 模拟价格波动
